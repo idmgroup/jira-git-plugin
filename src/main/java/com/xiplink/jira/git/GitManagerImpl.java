@@ -53,12 +53,6 @@ import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 public class GitManagerImpl implements GitManager {
-	private static final class GitDirectoryFilenameFilter implements FilenameFilter {
-		public boolean accept(File dir, String name) {
-			return "config".equals(name) || "refs".equals(name);
-		}
-	}
-
 	private static Logger log = Logger.getLogger(GitManagerImpl.class);
 
 	private GitLinkRenderer linkRenderer;

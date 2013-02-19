@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,7 +24,6 @@ import com.atlassian.jira.project.version.VersionManager;
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.security.PermissionManager;
 import com.atlassian.jira.security.Permissions;
-import com.atlassian.jira.web.action.ProjectActionSupport;
 import com.atlassian.crowd.embedded.api.User;
 import com.xiplink.jira.git.MultipleGitRepositoryManager;
 import com.xiplink.jira.git.revisions.RevisionIndexer;
