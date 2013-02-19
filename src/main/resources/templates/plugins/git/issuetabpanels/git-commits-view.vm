@@ -1,4 +1,16 @@
 <style type="text/css">
+.gitbranch {
+border: 1px solid #EAEAEA;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+padding: 2px 4px;
+border: none;
+font-size: 10px;
+background: #474D57;
+color: white;
+font-family: 'Menlo', 'Liberation Mono', 'Consolas', 'Courier New', 'andale mono','lucida console',monospace;
+}
 .gitcommit h3 {
 	font-size: 15px;
 }
@@ -48,7 +60,11 @@ margin-bottom: .5em;
 			    <h3>$git.timePerformedFormatted by ${git.revision.authorIdent.name}</h3>
 			</div>
 			<div class="mod-content">
-			   <div class="commit-header"><b>$git.revision.id.name</b> in <b>$git.branch</b> on <b>$git.repositoryDisplayName</b></div>
+			   <div class="commit-header"><b>$git.revision.id.name</b> in <b>$git.repositoryDisplayName</b> on 
+			   #foreach ($branch in $git.branches)
+			    <b class="gitbranch">$branch</b> 
+			   #end
+			    </div>
 			   <div>
 				   <div class="gitcommitmsg"><blockquote>
 				   	#makelinkedhtml($git.revision.getFullMessage().trim())
