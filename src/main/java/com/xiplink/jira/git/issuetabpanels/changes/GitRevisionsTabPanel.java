@@ -40,7 +40,6 @@ public class GitRevisionsTabPanel extends AbstractIssueTabPanel {
         try {
             RevisionIndexer revisionIndexer = multipleGitRepositoryManager.getRevisionIndexer();
 
-            revisionIndexer.updateIndex();
 			List<RevisionInfo> logEntries = revisionIndexer.getLogEntriesByRepository(issue);
 
 			// This is a bit of a hack to get the error message across
