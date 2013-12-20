@@ -2,13 +2,12 @@ package com.xiplink.jira.git;
 
 import java.util.Collection;
 
-import com.atlassian.jira.extension.Startable;
 import com.xiplink.jira.git.revisions.RevisionIndexer;
 
 /**
  * Main component of the Git plugin.
  */
-public interface MultipleGitRepositoryManager extends Startable {
+public interface MultipleGitRepositoryManager {
 	String GIT_ROOT_KEY = "git.root";
 	String GIT_ORIGIN_KEY = "git.origin";
 	String GIT_REPOSITORY_NAME = "git.display.name";

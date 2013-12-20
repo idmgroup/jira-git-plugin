@@ -55,7 +55,9 @@ public class MultipleGitRepositoryManagerImpl implements MultipleGitRepositoryMa
 		this.jiraPropertySetFactory = jiraPropertySetFactory;
 
 		managerMap = loadGitManagers();
+		
 		revisionIndexer = new RevisionIndexer(this, versionManager, issueManager, permissionManager, serviceManager, indexPathManager);
+        revisionIndexer.start();
 	}
 
 	/**
@@ -222,11 +224,5 @@ public class MultipleGitRepositoryManagerImpl implements MultipleGitRepositoryMa
 
 	public GitManager getRepository(long id) {
 		return managerMap.get(new Long(id));
-	}
-
-	public void start() throws Exception {
-		if (isIndexingRevisions()) {
-			getRevisionIndexer().start();
-		}
 	}
 }
