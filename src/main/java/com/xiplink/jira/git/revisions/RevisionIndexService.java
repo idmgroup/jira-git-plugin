@@ -63,6 +63,9 @@ public class RevisionIndexService extends AbstractService
 
     public static void install(ServiceManager serviceManager) throws Exception
     {
+        // remove the service first if it already exists
+        remove(serviceManager);
+        
         log.info("install()");
         if (serviceManager.getServiceWithName(REVISION_INDEX_SERVICE_NAME) == null)
         {
