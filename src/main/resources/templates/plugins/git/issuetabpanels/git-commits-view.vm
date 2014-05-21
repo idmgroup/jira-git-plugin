@@ -60,7 +60,15 @@ margin-bottom: .5em;
 		    <h3>$git.timePerformedFormatted by ${git.revision.authorIdent.name}</h3>
 		</div>
 		<div class="mod-content">
-		   <div class="commit-header"><b>$git.revision.id.name</b> in <b>$git.repositoryDisplayName</b> on 
+		   <div class="commit-header">
+#if ($git.linkRenderer.getRevisionHref($git.revision))
+<a style="color: inherit; text-decoration: inherit;" href="$git.linkRenderer.getRevisionHref($git.revision)">
+#end
+		   <b>$git.revision.id.name.substring(0,9)</b>
+#if ($git.linkRenderer.getRevisionHref($git.revision))
+</a>
+#end	   
+		    in <b>$git.repositoryDisplayName</b> on 
 		   #foreach ($branch in $git.branches)
 		   <a href="$git.linkRenderer.getBranchHref($branch)">
 		    <b class="gitbranch">$branch</b> 
