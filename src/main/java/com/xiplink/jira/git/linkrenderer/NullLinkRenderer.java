@@ -10,8 +10,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import com.xiplink.jira.git.FileDiff;
 
-
-
 /**
  * Used when the user does not specify any web links for Perforce - just return String values, no links.
  */
@@ -34,6 +32,10 @@ public class NullLinkRenderer implements GitLinkRenderer
     }
 
 	public String getRevisionHref(RevCommit revision) {
+		return null;
+	}
+
+	public String getBranchHref(String branch) {
 		return null;
 	}
 

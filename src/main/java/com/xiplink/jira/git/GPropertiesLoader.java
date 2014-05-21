@@ -73,6 +73,8 @@ public class GPropertiesLoader {
 					.getProperty(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_MODIFIED + indexStr);
 			final String fileDeletedFormat = props.getProperty(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_DELETED
 					+ indexStr);
+			final String branchFormat = props.getProperty(MultipleGitRepositoryManager.GIT_LINKFORMAT_BRANCH
+					+ indexStr);
 
 			Boolean revisionIndexing = null;
 			if (props.containsKey(MultipleGitRepositoryManager.GIT_REVISION_INDEXING_KEY + indexStr)) {

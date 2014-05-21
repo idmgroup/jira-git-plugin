@@ -7,10 +7,10 @@ public class WebLinkType extends Object {
     private final ViewLinkFormat viewLinkFormat;
 
     public WebLinkType(String key, String name, String viewFormat, String changeset, String fileAdded,
-            String fileModified, String fileDeleted) {
+            String fileModified, String fileDeleted, String branch) {
         this.key = key;
         this.name = name;
-        viewLinkFormat = new ViewLinkFormat(key, changeset, fileAdded, fileModified, fileDeleted, viewFormat);
+        viewLinkFormat = new ViewLinkFormat(key, changeset, fileAdded, fileModified, fileDeleted, viewFormat, branch);
     }
 
     public String getKey() {
@@ -39,5 +39,9 @@ public class WebLinkType extends Object {
 
     public String getFileDeletedFormat() {
         return viewLinkFormat.getFileDeletedFormat();
+    }
+    
+    public String getBranchFormat() {
+    	return viewLinkFormat.getBranchFormat();
     }
 }

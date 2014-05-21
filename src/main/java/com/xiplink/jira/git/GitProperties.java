@@ -16,6 +16,7 @@ public class GitProperties implements GProperties {
 	private String fileDeletedFormat;
 	private String fileModifiedFormat;
 	private String fileReplacedFormat;
+	private String branchFormat;
 
 	public void fillPropertiesFromOther(GitProperties other) {
 		if (this.getRevisionIndexing() == null) {
@@ -49,6 +50,9 @@ public class GitProperties implements GProperties {
 
 		if (fileReplacedFormat == null)
 			setFileReplacedFormat(other.getFileReplacedFormat());
+		
+		if (branchFormat == null) 
+			setBranchFormat(other.getBranchFormat());
 	}
 
 	public String getWebLinkType() {
@@ -61,7 +65,7 @@ public class GitProperties implements GProperties {
 
 	public String toString() {
 		return "origin: " + origin + "  revisioningIndex: " + getRevisionIndexing() + " revisioningCacheSize: "
-				+ getRevisionCacheSize();
+				+ getRevisionCacheSize() + " branchFormat: " + getBranchFormat();
 	}
 
 	public String getRoot() {
@@ -160,6 +164,15 @@ public class GitProperties implements GProperties {
 
 	public GitProperties setOrigin(String gitOriginStr) {
 		this.origin = gitOriginStr;
+		return this;
+	}
+
+	public String getBranchFormat() {
+		return branchFormat;
+	}
+
+	public GitProperties setBranchFormat(String branchFormat) {
+		this.branchFormat = branchFormat;
 		return this;
 	}
 

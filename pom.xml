@@ -8,9 +8,9 @@
     <name>JIRA Git plugin</name>
     <packaging>atlassian-plugin</packaging>
     <properties>
-        <jira.version>5.0.1</jira.version>
-        <jira.data.version>5.0.1</jira.data.version>
-        <amps.version>4.0</amps.version>
+        <jira.version>5.0.2</jira.version>
+        <jira.data.version>5.0.2</jira.data.version>
+        <amps.version>4.2.20</amps.version>
     </properties>
     <description>Git Jira plugin</description>
     <url>https://studio.plugins.atlassian.com/wiki/display/JGIT/JIRA+Git+Plugin</url>
@@ -40,9 +40,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.jgit</groupId>
-            <artifactId>org.eclipse.jgit</artifactId>
-            <version>0.10.1</version>
+           <groupId>org.eclipse.jgit</groupId>
+           <artifactId>org.eclipse.jgit</artifactId>
+           <version>3.3.2.201404171909-r</version>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>
@@ -121,6 +121,7 @@
     </pluginRepositories>
     <build>
         <plugins>
+
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
@@ -130,6 +131,15 @@
                     <productVersion>${jira.version}</productVersion>
                     <productDataVersion>${jira.data.version}</productDataVersion>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-amps-plugin</artifactId>
+                <version>${amps.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                 <allowGoogleTracking>false</allowGoogleTracking>
+                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

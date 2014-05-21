@@ -40,6 +40,7 @@
         webLinkTypes["$webLinkType.key"]["fileAddedFormat"] = "$webLinkType.fileAddedFormat";
         webLinkTypes["$webLinkType.key"]["fileModifiedFormat"] = "$webLinkType.fileModifiedFormat";
         webLinkTypes["$webLinkType.key"]["fileDeletedFormat"] = "$webLinkType.fileDeletedFormat";
+        webLinkTypes["$webLinkType.key"]["branchFormat"] = "$webLinkType.branchFormat";
     #end
 
     function getHost(origin)
@@ -72,6 +73,7 @@
         setWebLinkFormat("fileAddedFormat", selectedType),
         setWebLinkFormat("fileModifiedFormat", selectedType),
         setWebLinkFormat("fileDeletedFormat", selectedType);
+        setWebLinkFormat("branchFormat", selectedType);
     }
 </script>
 
@@ -102,4 +104,8 @@
 
 #controlHeader($action 'fileDeletedFormat' $i18n.getText("git.repository.file.deleted.format") false $displayParameters.noHeader)
 <input type="text" id="fileDeletedFormat" name="fileDeletedFormat" #if ($fileDeletedFormat) value="$fileDeletedFormat" #end  size="60"/>
+#controlFooter($action '' $displayParameters.noHeader)
+
+#controlHeader($action 'branchFormat' $i18n.getText("git.repository.branch.format") false $displayParameters.noHeader)
+<input type="text" id="branchFormat" name="branchFormat" #if ($branchFormat) value="$branchFormat" #end  size="60"/>
 #controlFooter($action '' $displayParameters.noHeader)

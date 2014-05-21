@@ -19,6 +19,8 @@ public interface GitLinkRenderer
 
     String getChangePathLink(RevCommit revision, FileDiff changePath);
 
-    public String getCopySrcLink(RevCommit revision, FileDiff changePath);
+    String getCopySrcLink(RevCommit revision, FileDiff changePath);
+    
+    String getBranchHref(String branch);
 
 }

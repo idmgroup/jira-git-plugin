@@ -18,6 +18,7 @@ public class AddGitRepositoryAction extends GitActionSupport implements GPropert
     private String fileAddedFormat;
     private String fileModifiedFormat;
     private String fileDeletedFormat;
+    private String branchFormat;
 
     public AddGitRepositoryAction(MultipleGitRepositoryManager manager) {
         super(manager);
@@ -171,4 +172,12 @@ public class AddGitRepositoryAction extends GitActionSupport implements GPropert
     public String getOrigin() {
         return origin;
     }
+
+	public String getBranchFormat() {
+		return branchFormat;
+	}
+
+	public void setBranchFormat(String branchFormat) {
+		this.branchFormat = branchFormat;
+	}
 }
