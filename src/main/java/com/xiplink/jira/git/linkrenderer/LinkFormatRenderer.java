@@ -27,6 +27,7 @@ public class LinkFormatRenderer implements GitLinkRenderer {
     private String fileModifiedFormat;
     private String fileDeletedFormat;
     private String changesetFormat;
+    private String branchFormat;
 	private String originPath;
 	private String originPathWithoutDotGit;
 
@@ -55,6 +56,9 @@ public class LinkFormatRenderer implements GitLinkRenderer {
 
             if (StringUtils.isNotBlank(linkFormat.getViewFormat())) {
                 pathLinkFormat = linkFormat.getViewFormat();
+            }
+            if (StringUtils.isNotBlank(linkFormat.getBranchFormat())) {
+            	branchFormat = linkFormat.getBranchFormat();
             }
         }
     }
@@ -147,4 +151,14 @@ public class LinkFormatRenderer implements GitLinkRenderer {
 
         return String.format("<a href=\"%s\">%s</a>", href, path);
     }
+
+	public String getBranchHref(String branch) {
+        if (branchFormat == null) {
+            return null;
+        }
+        String href = StringUtils.replace(branchFormat, "${branch}", branch);
+        href = StringUtils.replace(href, "${originPath}", originPath);
+        href = StringUtils.replace(href, "${originPathWithoutDotGit}", originPathWithoutDotGit);
+        return href;
+	}
 }

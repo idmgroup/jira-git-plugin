@@ -338,7 +338,7 @@ public class GitManagerImpl implements GitManager {
             return;
         }
 
-        if (!repository.getObjectsDirectory().exists()) {
+        if (!repository.getDirectory().exists()) {
             log.error("Connection to git repository " + getRoot() + " failed: Invalid repository");
             // We don't want to throw an exception here because then the system
             // won't start if the repo is down or there is something wrong
@@ -372,11 +372,13 @@ public class GitManagerImpl implements GitManager {
 					.getString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_MODIFIED);
 			final String fileDeletedFormat = properties
 					.getString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_DELETED);
+			final String branchFormat = properties
+					.getString(MultipleGitRepositoryManager.GIT_LINKFORMAT_BRANCH);
 
 			if (linkPathFormat != null || changesetFormat != null || fileAddedFormat != null
 					|| fileModifiedFormat != null || fileDeletedFormat != null)
 				viewLinkFormat = new ViewLinkFormat(type, changesetFormat, fileAddedFormat, fileModifiedFormat,
-						fileDeletedFormat, linkPathFormat);
+						fileDeletedFormat, linkPathFormat, branchFormat);
 			else
 				viewLinkFormat = null; /*
 										 * [git-190] This could happen if the user clears all the fields in the Git

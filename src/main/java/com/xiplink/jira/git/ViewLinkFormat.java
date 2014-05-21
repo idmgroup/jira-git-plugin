@@ -13,15 +13,17 @@ public class ViewLinkFormat {
     private String viewFormat;
     private String fileModifiedFormat;
     private String fileDeletedFormat;
+    private String branchFormat;
 
     public ViewLinkFormat(String type, String changesetFormat, String fileAddedFormat, String fileModifiedFormat,
-            String fileDeletedFormat, String pathLinkFormat) {
+            String fileDeletedFormat, String pathLinkFormat, String branchFormat) {
         this.setType(type);
         this.setViewFormat(pathLinkFormat);
         this.setFileAddedFormat(fileAddedFormat);
         this.setFileModifiedFormat(fileModifiedFormat);
         this.setFileDeletedFormat(fileDeletedFormat);
         this.setChangesetFormat(changesetFormat);
+        this.setBranchFormat(branchFormat);
     }
 
     public void fillFormatFromOther(ViewLinkFormat other) {
@@ -44,6 +46,10 @@ public class ViewLinkFormat {
             if (this.getChangesetFormat() == null) {
                 this.setChangesetFormat(other.changesetFormat);
             }
+            if (this.getBranchFormat() == null) {
+                this.setBranchFormat(other.branchFormat);
+            }
+
         }
 
     }
@@ -52,7 +58,8 @@ public class ViewLinkFormat {
         return "pathLink: " + getViewFormat()
                 + " addedFormat: " + getFileAddedFormat()
                 + " modifiedFormat: " + getFileModifiedFormat()
-                + " deletedFormat: " + getFileDeletedFormat();
+                + " deletedFormat: " + getFileDeletedFormat()
+                + " branchFormat: " + getBranchFormat();
     }
 
     public String getType() {
@@ -102,4 +109,12 @@ public class ViewLinkFormat {
     public void setFileDeletedFormat(String fileDeletedFormat) {
         this.fileDeletedFormat = fileDeletedFormat;
     }
+
+	public String getBranchFormat() {
+		return branchFormat;
+	}
+
+	public void setBranchFormat(String branchFormat) {
+		this.branchFormat = branchFormat;
+	}
 }
