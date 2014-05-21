@@ -1,4 +1,7 @@
 <style type="text/css">
+.gitcommit h3 {
+        font-size: 15px;
+}
 .gitbranch {
 border: 1px solid #EAEAEA;
 -moz-border-radius: 4px;
@@ -10,9 +13,6 @@ font-size: 10px;
 background: #474D57;
 color: white;
 font-family: 'Menlo', 'Liberation Mono', 'Consolas', 'Courier New', 'andale mono','lucida console',monospace;
-}
-.gitcommit h3 {
-	font-size: 15px;
 }
 .gitcommitmsg blockquote {
 background: #E0F0FF;

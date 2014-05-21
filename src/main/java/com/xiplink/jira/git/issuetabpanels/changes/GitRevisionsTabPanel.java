@@ -8,8 +8,10 @@ package com.xiplink.jira.git.issuetabpanels.changes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
+import com.xiplink.jira.git.issuetabpanels.changes.GitRevisionAction;
 import com.xiplink.jira.git.revisions.RevisionIndexer;
 import com.xiplink.jira.git.revisions.RevisionInfo;
 import org.apache.log4j.Logger;
@@ -52,7 +54,7 @@ public class GitRevisionsTabPanel extends AbstractIssueTabPanel {
                 GenericMessageAction action = new GenericMessageAction(getText("no.log.entries.message"));
                 return EasyList.build(action);
 			} else {
-				HashMap<String,GitRevisionAction> actions = new HashMap<String, GitRevisionAction>(logEntries.size());
+				Map<String,GitRevisionAction> actions = new HashMap<String, GitRevisionAction>(logEntries.size());
 				for (RevisionInfo entry : logEntries) {
 					String commitName = entry.getCommit().getId().getName();
 					if (actions.containsKey(commitName)) {

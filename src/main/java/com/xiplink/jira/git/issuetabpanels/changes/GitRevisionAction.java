@@ -47,7 +47,7 @@ public class GitRevisionAction extends AbstractIssueAction {
     }
     
     public void addBranch(String branch) {
-    	Log.warn("Adding new branch " + branch);
+    	Log.debug("Adding new branch " + branch);
         this.branches.add(branch);
     }
 

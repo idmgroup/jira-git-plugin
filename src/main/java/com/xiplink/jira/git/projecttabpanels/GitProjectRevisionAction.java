@@ -5,12 +5,17 @@ import java.util.Map;
 import org.ofbiz.core.util.UtilMisc;
 import org.eclipse.jgit.revwalk.RevCommit;
 
+import com.xiplink.jira.git.issuetabpanels.changes.GitRevisionAction;
+
 
 import com.atlassian.jira.plugin.projectpanel.ProjectTabPanelModuleDescriptor;
 import com.atlassian.jira.web.action.JiraWebActionSupport;
 import com.xiplink.jira.git.FileDiff;
 import com.xiplink.jira.git.MultipleGitRepositoryManager;
-import com.xiplink.jira.git.issuetabpanels.changes.GitRevisionAction;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * One item in the 'Git Commits' project tab.
@@ -20,7 +25,7 @@ import com.xiplink.jira.git.issuetabpanels.changes.GitRevisionAction;
  */
 public class GitProjectRevisionAction extends GitRevisionAction
 {
-
+	protected Set<String> branches;
     protected final ProjectTabPanelModuleDescriptor projectDescriptor;
 
     public GitProjectRevisionAction(RevCommit logEntry,

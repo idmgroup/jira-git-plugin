@@ -3,7 +3,18 @@
 .gitcommit h3 {
 	font-size: 15px;
 }
-
+.gitbranch {
+border: 1px solid #EAEAEA;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+padding: 2px 4px;
+border: none;
+font-size: 10px;
+background: #474D57;
+color: white;
+font-family: 'Menlo', 'Liberation Mono', 'Consolas', 'Courier New', 'andale mono','lucida console',monospace;
+}
 .gitcommitmsg blockquote {
 background: #E0F0FF;
 border-left: 1px solid #C2D9EF;
@@ -143,7 +154,21 @@ margin-bottom: .5em;
 			    <h3>$commit.timePerformedFormatted by ${commit.revision.authorIdent.name}</h3>
 			</div>
 			<div class="mod-content">
-			   <div class="commit-header"><b>$commit.revision.id.name</b> in <b>$commit.branch</b> on <b>$commit.repositoryDisplayName</b></div>
+			   <div class="commit-header">
+                        #if ($commit.linkRenderer.getRevisionHref($commit.revision))
+                        <a style="color: inherit; text-decoration: inherit;" href="$commit.linkRenderer.getRevisionHref($commit.revision)">
+                        #end
+                        <b>$commit.revision.id.name.substring(0,9)</b>
+                        #if ($commit.linkRenderer.getRevisionHref($commit.revision))
+                        </a>
+                        #end
+                         in 
+                           #foreach ($branch in $commit.branches)
+                           <a href="$commit.linkRenderer.getBranchHref($branch)">
+                            <b class="gitbranch">$branch</b> 
+                            </a>
+                           #end
+			    on <b>$commit.repositoryDisplayName</b></div>
 			   <div>
 				   <div class="gitcommitmsg"><blockquote>
 				   	#makelinkedhtml($commit.revision.getFullMessage().trim())
