@@ -5,11 +5,18 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Collections;
+
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.xiplink.jira.git.projecttabpanels.GitProjectRevisionAction;
 import com.xiplink.jira.git.revisions.RevisionInfo;
+import com.xiplink.jira.git.MultipleGitRepositoryManager;
+import com.xiplink.jira.git.revisions.RevisionIndexer;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -25,10 +32,10 @@ import com.atlassian.jira.project.version.VersionManager;
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.security.PermissionManager;
 import com.atlassian.jira.security.Permissions;
-import com.atlassian.jira.web.action.ProjectActionSupport;
 import com.atlassian.crowd.embedded.api.User;
-import com.xiplink.jira.git.MultipleGitRepositoryManager;
-import com.xiplink.jira.git.revisions.RevisionIndexer;
+import com.atlassian.jira.plugin.issuetabpanel.IssueAction;
+import com.atlassian.jira.issue.action.IssueActionComparator;
+
 
 /**
  * This class provides a tab panel for the JIRA project view.
@@ -141,11 +148,10 @@ public class GitProjectTabPanel extends AbstractProjectTabPanel implements Proje
 	 * @return A List of {@link GitProjectRevisionAction} objects, each of which holds a valid {@link RevCommit}.
 	 *         The number of commits returned is decided by the constant <code>NUMBER_OF_REVISIONS</code>.
 	 */
-	private Collection<GitProjectRevisionAction> getRecentCommits(String key, Version version, User user) {
+	private Collection<IssueAction> getRecentCommits(String key, Version version, User user) {
 		if (log.isDebugEnabled()) {
 			log.debug(">getRecentCommits(" + key + ", " + version + ")");
 		}
-		List<GitProjectRevisionAction> actions = new ArrayList<GitProjectRevisionAction>();
 
 		try {
 			List<RevisionInfo> logEntries;
@@ -159,16 +165,26 @@ public class GitProjectTabPanel extends AbstractProjectTabPanel implements Proje
 			}
 
 			if (logEntries.size() > 0) {
+				Map<String,GitProjectRevisionAction> actions = new HashMap<String, GitProjectRevisionAction>(logEntries.size());
 				for (RevisionInfo entry : logEntries) {
-                    actions.add(new GitProjectRevisionAction(entry.getCommit(), multipleGitRepositoryManager,
+					String commitName = entry.getCommit().getId().getName();
+					if (actions.containsKey(commitName)) {
+						actions.get(commitName).addBranch(entry.getBranch());
+					} else {
+						actions.put(commitName, new GitProjectRevisionAction(entry.getCommit(), multipleGitRepositoryManager,
                             descriptor, entry.getRepositoryId(), entry.getBranch()));
+					}
 				}
+				List<IssueAction> listActions = new ArrayList<IssueAction>();
+				listActions.addAll(actions.values());
+				Collections.sort(listActions, IssueActionComparator.COMPARATOR);
+				return listActions;
 			}
 		}
 		catch (Throwable t) {
 			log.error("Error retrieving actions for project", t);
 		}
-		return actions;
+		return Collections.emptyList();
 	}
 
 	/**

@@ -53,7 +53,9 @@ public class GitActionSupport extends JiraWebActionSupport {
                         properties.getProperty(type + ".changeset"),
                         properties.getProperty(type + ".file.added"),
                         properties.getProperty(type + ".file.modified"),
-                        properties.getProperty(type + ".file.deleted")));
+                        properties.getProperty(type + ".file.deleted"),
+                        properties.getProperty(type + ".branch")
+                        ));
             }
         }
         return webLinkTypes;

@@ -7,8 +7,11 @@ package com.xiplink.jira.git.issuetabpanels.changes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
+import com.xiplink.jira.git.issuetabpanels.changes.GitRevisionAction;
 import com.xiplink.jira.git.revisions.RevisionIndexer;
 import com.xiplink.jira.git.revisions.RevisionInfo;
 import org.apache.log4j.Logger;
@@ -50,13 +53,20 @@ public class GitRevisionsTabPanel extends AbstractIssueTabPanel {
                 GenericMessageAction action = new GenericMessageAction(getText("no.log.entries.message"));
                 return EasyList.build(action);
 			} else {
-				List<IssueAction> actions = new ArrayList<IssueAction>(logEntries.size());
+				Map<String,GitRevisionAction> actions = new HashMap<String, GitRevisionAction>(logEntries.size());
 				for (RevisionInfo entry : logEntries) {
-                    actions.add(new GitRevisionAction(entry.getCommit(), multipleGitRepositoryManager,
+					String commitName = entry.getCommit().getId().getName();
+					if (actions.containsKey(commitName)) {
+						actions.get(commitName).addBranch(entry.getBranch());
+					} else {
+						actions.put(commitName, new GitRevisionAction(entry.getCommit(), multipleGitRepositoryManager,
                             descriptor, entry.getRepositoryId(), entry.getBranch()));
+					}
 				}
-				Collections.sort(actions, IssueActionComparator.COMPARATOR);
-				return actions;
+				List<IssueAction> listActions = new ArrayList<IssueAction>();
+				listActions.addAll(actions.values());
+				Collections.sort(listActions, IssueActionComparator.COMPARATOR);
+				return listActions;
 			}
 		}
 		catch (Throwable t) {

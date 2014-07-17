@@ -34,8 +34,6 @@ import org.apache.lucene.search.*;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.ofbiz.core.entity.GenericEntityException;
-import org.ofbiz.core.entity.GenericValue;
 
 import java.io.File;
 import java.io.IOException;
@@ -209,15 +207,14 @@ public class RevisionIndexer {
                         }
                     }
 
-                    gitManager.fetch();
+                    Collection<String> forceUpdateBranches = gitManager.fetch();
 
                     long repoId = gitManager.getId();
-
                     Map<String, String> allBranches = gitManager.getBranches();
                     Collection<String> branchesNames = branchFilter.filter(allBranches.keySet());
 
                     for (String branchName : branchesNames) {
-                        updateBranchIndex(repoId, branchName, allBranches, gitManager);
+                        updateBranchIndex(repoId, branchName, forceUpdateBranches.contains(branchName), allBranches, gitManager);
                     }
                 } catch (IOException e) {
                     log.warn("Unable to index repository '" + gitManager.getDisplayName() + "'", e);
@@ -228,22 +225,32 @@ public class RevisionIndexer {
         }
     }
 
-    private void updateBranchIndex(long repoId, String branchName, Map<String, String> allBranches, GitManager gitManager)
+    private void updateBranchIndex(long repoId, String branchName, boolean reset, Map<String, String> allBranches, GitManager gitManager)
             throws IOException, IndexException {
 
-        String branchId = allBranches.get(branchName);
+        
+        if (reset) {
+        	final IndexWriter writer = indexAccessor.getIndexWriter(getIndexPath(), false, ANALYZER);
+            try {
+                writer.deleteDocuments(new Term(FIELD_BRANCH, branchName));
+                gitManager.getProperties().remove(MultipleGitRepositoryManager.GIT_BRANCH_INDEXED_REVISION + branchName);
+            } finally {
+                writer.close();
+            }
+            
+        }
         String latestIndexedRevision =
                 gitManager.getProperties().getString(MultipleGitRepositoryManager.GIT_BRANCH_INDEXED_REVISION + branchName);
 
         if (log.isDebugEnabled()) {
             log.info("Branch: " + branchName);
         }
-
-        if (branchId.equals(latestIndexedRevision)) {
+        
+        String branchId = allBranches.get(branchName);
+        if (!reset && branchId.equals(latestIndexedRevision)) {
             if (log.isDebugEnabled()) {
                 log.info("Branch index is up-to-date");
             }
-
             return;
         }
 

@@ -81,6 +81,10 @@
                       #if ($repo.getViewLinkFormat().getFileDeletedFormat())
                       <br><b>$i18n.getText("git.linkformat.file.deleted")</b>: $repo.getViewLinkFormat().getFileDeletedFormat()
                       #end
+                      #if ($repo.getViewLinkFormat().getBranchFormat())
+                      <br><b>$i18n.getText("git.linkformat.branch")</b>: $repo.getViewLinkFormat().getBranchFormat()
+                      #end
+
                     #end
                 </td>
 

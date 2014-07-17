@@ -20,6 +20,7 @@ public interface MultipleGitRepositoryManager {
 	String GIT_LINKFORMAT_FILE_ADDED = "linkformat.file.added";
 	String GIT_LINKFORMAT_FILE_MODIFIED = "linkformat.file.modified";
 	String GIT_LINKFORMAT_FILE_DELETED = "linkformat.file.deleted";
+	String GIT_LINKFORMAT_BRANCH = "linkformat.branch";
 
 	String GIT_LINKFORMAT_PATH_KEY = "linkformat.copyfrom";
 

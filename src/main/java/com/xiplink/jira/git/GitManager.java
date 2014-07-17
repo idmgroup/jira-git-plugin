@@ -33,7 +33,7 @@ public interface GitManager {
 	GitLinkRenderer getLinkRenderer();
 	void update(GProperties properties);
 	PropertySet getProperties();
-	void fetch();
+	Collection<String> fetch();
 	
 	FileDiff[] getFileDiffs(String revision);
 

@@ -9,6 +9,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.jfree.util.Log;
 
 import com.atlassian.jira.plugin.issuetabpanel.AbstractIssueAction;
 import com.atlassian.jira.plugin.issuetabpanel.IssueTabPanelModuleDescriptor;
@@ -27,7 +28,7 @@ public class GitRevisionAction extends AbstractIssueAction {
     protected final IssueTabPanelModuleDescriptor descriptor;
     protected MultipleGitRepositoryManager multipleGitRepositoryManager;
     protected Date timePerformed;
-    protected String branch;
+    protected Set<String> branches;
 
     public GitRevisionAction(RevCommit logEntry, MultipleGitRepositoryManager multipleGitRepositoryManager,
             IssueTabPanelModuleDescriptor descriptor, long repoId, String branch) {
@@ -37,11 +38,17 @@ public class GitRevisionAction extends AbstractIssueAction {
         this.revision = logEntry;
         this.timePerformed = new Date(revision.getCommitTime() * 1000L);
         this.repoId = repoId;
-        this.branch = branch;
+        this.branches = new HashSet<String>();
+        this.branches.add(branch);
     }
 
     protected void populateVelocityParams(Map params) {
         params.put("git", this);
+    }
+    
+    public void addBranch(String branch) {
+    	Log.debug("Adding new branch " + branch);
+        this.branches.add(branch);
     }
 
     public GitLinkRenderer getLinkRenderer() {
@@ -65,8 +72,8 @@ public class GitRevisionAction extends AbstractIssueAction {
         return repoId;
     }
 
-    public String getBranch() {
-        return branch;
+    public Set<String> getBranches() {
+        return branches;
     }
 
     public String getUsername() {

@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xiplink.jira.git</groupId>
     <artifactId>jira-git-plugin</artifactId>
-    <version>0.6.1-SNAPSHOT</version>
-
+    <version>0.6.4.9</version>
     <name>JIRA Git plugin</name>
     <packaging>atlassian-plugin</packaging>
-
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jira.version>5.0.1</jira.version>
-        <jira.data.version>5.0.1</jira.data.version>
+        <jira.version>5.0.2</jira.version>
+        <jira.data.version>5.0.2</jira.data.version>
+        <amps.version>4.2.20</amps.version>
     </properties>
-
     <description>Git Jira plugin</description>
     <url>https://studio.plugins.atlassian.com/wiki/display/JGIT/JIRA+Git+Plugin</url>
-
     <dependencies>
         <dependency>
             <groupId>com.atlassian.jira</groupId>
@@ -44,9 +40,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.jgit</groupId>
-            <artifactId>org.eclipse.jgit</artifactId>
-            <version>0.10.1</version>
+           <groupId>org.eclipse.jgit</groupId>
+           <artifactId>org.eclipse.jgit</artifactId>
+           <version>3.3.2.201404171909-r</version>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>
@@ -65,7 +61,7 @@
             <version>3.2.0</version>
             <scope>provided</scope>
         </dependency>
-<!--
+        <!--
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>oscore</artifactId>
@@ -74,7 +70,6 @@
         </dependency>
 -->
     </dependencies>
-
     <developers>
         <developer>
             <name>J. Longman</name>
@@ -85,13 +80,21 @@
             <organization>Reliadev</organization>
             <organizationUrl>http://www.reliadev.com</organizationUrl>
         </developer>
+        <developer>
+            <name>Marcello Teodori</name>
+            <organization/>
+            <organizationUrl/>
+        </developer>
+        <developer>
+            <name>Daniel Gomes</name>
+            <organization>Comut Technologies</organization>
+            <organizationUrl>http://www.com-ut.com</organizationUrl>
+        </developer>
     </developers>
-
     <scm>
         <connection>scm:svn:https://studio.plugins.atlassian.com/svn/JGIT</connection>
         <developerConnection>scm:svn:https://studio.plugins.atlassian.com/svn/JGIT</developerConnection>
     </scm>
-
     <distributionManagement>
         <repository>
             <id>atlassian-contrib</id>
@@ -104,15 +107,10 @@
             <url>davs://maven.atlassian.com/contrib-snapshot</url>
         </snapshotRepository>
     </distributionManagement>
-
     <repositories>
         <repository>
             <id>atlassian-public-repository</id>
             <url>http://maven.atlassian.com/repository/public</url>
-        </repository>
-        <repository>
-            <id>jgit-repository</id>
-            <url>http://download.eclipse.org/jgit/maven</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -121,18 +119,27 @@
             <url>https://maven.atlassian.com/content/groups/public</url>
         </pluginRepository>
     </pluginRepositories>
-
     <build>
         <plugins>
+
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
-                <version>3.9.1</version>
+                <version>${amps.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
                     <productDataVersion>${jira.data.version}</productDataVersion>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-amps-plugin</artifactId>
+                <version>${amps.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                 <allowGoogleTracking>false</allowGoogleTracking>
+                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -145,5 +152,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

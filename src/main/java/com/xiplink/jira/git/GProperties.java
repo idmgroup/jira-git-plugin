@@ -26,6 +26,8 @@ public interface GProperties {
 
     String getFileDeletedFormat();
 
+    String getBranchFormat();
+
     static class Util {
 
         static PropertySet fillPropertySet(GProperties properties, PropertySet propertySet) {
@@ -40,6 +42,7 @@ public interface GProperties {
             propertySet.setString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_ADDED, properties.getFileAddedFormat());
             propertySet.setString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_MODIFIED, properties.getFileModifiedFormat());
             propertySet.setString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_DELETED, properties.getFileDeletedFormat());
+            propertySet.setString(MultipleGitRepositoryManager.GIT_LINKFORMAT_BRANCH, properties.getBranchFormat());
             return propertySet;
         }
     }

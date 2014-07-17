@@ -44,6 +44,7 @@ public class UpdateGitRepositoryAction extends AddGitRepositoryAction {
             this.setFileAddedFormat(repository.getViewLinkFormat().getFileAddedFormat());
             this.setFileDeletedFormat(repository.getViewLinkFormat().getFileDeletedFormat());
             this.setFileModifiedFormat(repository.getViewLinkFormat().getFileModifiedFormat());
+            this.setBranchFormat(repository.getViewLinkFormat().getBranchFormat());
         }
         this.setRevisionCacheSize(new Integer(repository.getRevisioningCacheSize()));
         this.setRevisionIndexing(new Boolean(repository.isRevisionIndexing()));

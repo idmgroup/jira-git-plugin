@@ -53,12 +53,6 @@ import static org.eclipse.jgit.lib.Constants.R_REMOTES;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 public class GitManagerImpl implements GitManager {
-	private static final class GitDirectoryFilenameFilter implements FilenameFilter {
-		public boolean accept(File dir, String name) {
-			return "config".equals(name) || "refs".equals(name);
-		}
-	}
-
 	private static Logger log = Logger.getLogger(GitManagerImpl.class);
 
 	private GitLinkRenderer linkRenderer;
@@ -344,7 +338,7 @@ public class GitManagerImpl implements GitManager {
             return;
         }
 
-        if (!repository.getObjectsDirectory().exists()) {
+        if (!repository.getDirectory().exists()) {
             log.error("Connection to git repository " + getRoot() + " failed: Invalid repository");
             // We don't want to throw an exception here because then the system
             // won't start if the repo is down or there is something wrong
@@ -378,11 +372,13 @@ public class GitManagerImpl implements GitManager {
 					.getString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_MODIFIED);
 			final String fileDeletedFormat = properties
 					.getString(MultipleGitRepositoryManager.GIT_LINKFORMAT_FILE_DELETED);
+			final String branchFormat = properties
+					.getString(MultipleGitRepositoryManager.GIT_LINKFORMAT_BRANCH);
 
 			if (linkPathFormat != null || changesetFormat != null || fileAddedFormat != null
 					|| fileModifiedFormat != null || fileDeletedFormat != null)
 				viewLinkFormat = new ViewLinkFormat(type, changesetFormat, fileAddedFormat, fileModifiedFormat,
-						fileDeletedFormat, linkPathFormat);
+						fileDeletedFormat, linkPathFormat, branchFormat);
 			else
 				viewLinkFormat = null; /*
 										 * [git-190] This could happen if the user clears all the fields in the Git
@@ -444,20 +440,20 @@ public class GitManagerImpl implements GitManager {
 		return FileDiff.compute(fileWalker, entry);
 	}
 
-	public void fetch() {
-
+	public Collection<String> fetch() {
+		List<String> result = new ArrayList<String>();
 		try {
 			Transport tn = Transport.open(repository, getOrigin());
 			final FetchResult r;
 			List<RefSpec> toget = new ArrayList<RefSpec>();
-			toget.add(new RefSpec("refs/heads/*:refs/heads/*"));
+			toget.add(new RefSpec("+refs/heads/*:refs/heads/*"));
 			try {
 				r = tn.fetch(new TextProgressMonitor(), toget);
 
 				if (r.getTrackingRefUpdates().isEmpty()) {
 					if (log.isDebugEnabled())
 						log.debug("No updates");
-					return;
+					return result;
 				}
 			} finally {
 				tn.close();
@@ -477,7 +473,9 @@ public class GitManagerImpl implements GitManager {
 				if (!shownURI) {
 					shownURI = true;
 				}
-
+				if (u.getResult() == RefUpdate.Result.FORCED || u.getResult() == RefUpdate.Result.RENAMED) {
+					result.add(dst);
+				}
 				if (log.isDebugEnabled())
 					log.debug(String.format(" %c %-17s %-10s -> %s", type, longType, src, dst));
 			}
@@ -485,6 +483,7 @@ public class GitManagerImpl implements GitManager {
 			// TODO Auto-generated catch block
 			log.warn("", e);
 		}
+		return result;
 
 	}
 
