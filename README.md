@@ -1,6 +1,8 @@
 jira-git-plugin
 ===============
 
+[![Build Status](https://travis-ci.org/idmgroup/jira-git-plugin.svg?branch=master)](https://travis-ci.org/idmgroup/jira-git-plugin)
+
 A git plugin for Jira for smaller repos.  An alternative to fisheye and stash.
 
 My fork correctly indexes branch re-writes and has an alternative commit view which collects the branches.  It's extra yummy.
