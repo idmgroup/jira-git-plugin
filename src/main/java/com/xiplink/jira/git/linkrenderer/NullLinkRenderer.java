@@ -31,12 +31,32 @@ public class NullLinkRenderer implements GitLinkRenderer
         + " #" + logEntryPath;//.getCopyRevision();
     }
 
-	public String getRevisionHref(RevCommit revision) {
+	@Override
+    public String getRevisionHref(RevCommit revision) {
 		return null;
 	}
 
-	public String getBranchHref(String branch) {
+	@Override
+    public String getBranchHref(String branch) {
 		return null;
 	}
+
+    @Override
+    public String getRevisionLink(RevCommit revision) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getChangePathLink(RevCommit revision, FileDiff changePath) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getCopySrcLink(RevCommit revision, FileDiff changePath) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
